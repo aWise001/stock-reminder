@@ -1,6 +1,7 @@
 import shopify
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 
+import json
 import os
 
 load_dotenv()
@@ -17,6 +18,8 @@ path = 'query.graphql'
 with open(path, 'r') as file:
     file_content = file.read()
 
-print(shopify.GraphQL().execute(file_content))
+result = shopify.GraphQL().execute(file_content)
+result_json = json.loads(result)
+print(result_json['data']['products'])
 
 shopify.ShopifyResource.clear_session()

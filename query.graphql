@@ -1,10 +1,26 @@
 query products {
-  products(first: 3) {
+  products(first: 250, query:
+  "status:ACTIVE") {
     edges {
       node {
-        id
         title
+        totalInventory
+        createdAt
+        variants(first: 10) {
+          edges {
+            node {
+              title
+              inventoryQuantity
+              availableForSale
+
+            }
+          }
+        }
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
