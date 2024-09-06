@@ -1,8 +1,8 @@
-import shopify
 from dotenv import load_dotenv
+import requests
 
-import json
 import os
+import re
 
 load_dotenv()
 
@@ -10,16 +10,31 @@ shop_url = os.getenv("SHOP_URL")
 api_version = os.getenv("API_VER")
 private_app_password = os.getenv("PRIVATE_KEY")
 
-session = shopify.Session(shop_url, api_version, private_app_password)
+endpoint = f"https://{shop_url}/admin/api/{api_version}/orders.json?status=any"
 
-shopify.ShopifyResource.activate_session(session)
+headers = {
+    "X-Shopify-Access-Token": private_app_password,
+    "Content-Type": "application/json"
+}
 
-path = 'query.graphql'
-with open(path, 'r') as file:
-    file_content = file.read()
+expr = 'https.+rel="next"'
+next_page = True
 
-result = shopify.GraphQL().execute(file_content)
-result_json = json.loads(result)
-print(result_json['data']['products'])
-
-shopify.ShopifyResource.clear_session()
+while (next_page):
+    response = requests.get(endpoint, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        for order in data['orders']:
+            print(f"Order number: {order['number']} Created at: {order['created_at']} Total: £{order['total_price']}")
+        header_link = response.headers['link']
+        links = header_link.split(", ")
+        for link in links:
+            if (re.search('rel="next"', link)):
+                endpoint = link[1:-13]
+            else:
+                if (len(links) == 1):
+                    next_page = False
+    else:
+        print(f"Request failed with status code: {response.status_code}")
+        print(f"Response: {response.text}")
+        next_page = None
