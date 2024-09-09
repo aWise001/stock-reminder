@@ -1,3 +1,5 @@
-ShopifyAPI==12.6.0
-python-dotenv==1.0.1
+ShopifyAPI
+python-dotenv
 requests
+pandas
+numpy
