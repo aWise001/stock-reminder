@@ -11,6 +11,8 @@ shop_url = os.getenv("SHOP_URL")
 api_version = os.getenv("API_VER")
 private_app_password = os.getenv("PRIVATE_KEY")
 
+created_at_min = "2024-03-01"
+
 # define header
 headers = {
     "X-Shopify-Access-Token": private_app_password,
@@ -26,7 +28,7 @@ def get_orders(field_list):
         else:
             fields += f"%2C{field_list[i]}"
     # build endpoint link
-    endpoint = f"https://{shop_url}/admin/api/{api_version}/orders.json?created_at_min=2024-03-01&fields={fields}&limit=250&status=any"
+    endpoint = f"https://{shop_url}/admin/api/{api_version}/orders.json?created_at_min={created_at_min}&fields={fields}&limit=250&status=any"
     # make API call
     response = requests.get(endpoint, headers=headers)
     if response.status_code == 200:
