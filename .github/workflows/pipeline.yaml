@@ -37,4 +37,4 @@ jobs:
         chmod +x build.sh
         ./build.sh
     - run: sam build --use-container
-    - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+    - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name stock-reminder-stack --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-${{ github.run_id }} --capabilities CAPABILITY_IAM --region eu-west-2
