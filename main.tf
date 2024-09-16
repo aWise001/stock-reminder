@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = "stocke-reminder-bucket"
+  bucket = "stock-reminder-bucket"
 }
 
 resource "aws_iam_role" "lambda_exec" {
