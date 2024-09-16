@@ -25,16 +25,32 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-    - uses: aws-actions/setup-sam@v1
-    - uses: aws-actions/configure-aws-credentials@v1
+    - name: Checkout Code
+      uses: actions/checkout@v3
+    
+    - name: Set Up Python
+      uses: actions/setup-python@v2
+    
+    - name: Set Up AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
-    - run: |
+    
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Zip Code
+      run: |
         chmod +x build.sh
         ./build.sh
-    - run: sam build --use-container
-    - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name stock-reminder-stack --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-${{ github.run_id }} --capabilities CAPABILITY_IAM --region eu-west-2
+
+    - name: Terraform Init
+      run: terraform init
+    
+    - name: Terraform Plan
+      run: terraform plan
+    
+    - name: Terraform Apply
+      run: terraform apply -auto-approve

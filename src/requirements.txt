@@ -1,0 +1,5 @@
+ShopifyAPI
+python-dotenv
+requests
+pandas
+numpy
