@@ -52,5 +52,10 @@ jobs:
     - name: Terraform Plan
       run: terraform plan
     
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+    - name: Terraform Apply or Destroy
+      if: ${{ github.event.inputs.destroy != 'yes' }}
+      run: terraform apply -auto-approve apply.plan
+
+    - name: Terraform Destroy
+      if: ${{ github.event.inputs.destroy == 'yes' }}
+      run: terraform destroy
