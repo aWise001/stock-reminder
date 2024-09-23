@@ -24,6 +24,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/iac
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
@@ -40,11 +43,9 @@ jobs:
     
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v2
-
-    - name: Zip Code
-      run: |
-        chmod +x build.sh
-        ./build.sh
+    
+    - name: Terraform Format
+      run: terraform fmt
 
     - name: Terraform Init
       run: terraform init
