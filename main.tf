@@ -35,19 +35,13 @@ resource "aws_s3_bucket_public_access_block" "s3_bucket_access" {
   restrict_public_buckets = true
 }
 
-data "archive_file" "lambda_archive_file" {
-  type        = "zip"
-  source_dir  = "${path.module}/lambda/"
-  output_path = "${path.module}/lambda/main.zip"
-}
-
 resource "aws_lambda_function" "lambda" {
   description      = "Lambda Function"
-  filename         = join("", data.archive_file.lambda_archive_file.*.output_path)
+  filename         = "main.zip"
   function_name    = "tf-stock-reminder"
   role             = aws_iam_role.lambda_role.arn
   handler          = "main.lambda_handler"
-  source_code_hash = join("", data.archive_file.lambda_archive_file.*.output_base64sha256)
+  source_code_hash = filebase64sha256("main.zip")
   runtime          = "python3.9"
 }
 
