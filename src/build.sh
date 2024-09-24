@@ -1,6 +1,6 @@
 #!/bin/bash
 pip install --target ./package -r requirements.txt
 cd package
-zip -r ../main.zip .
+zip -r ../lambda_function.zip .
 cd ../python
-zip -g main.zip main.py
+zip -g lambda_function.zip main.py
