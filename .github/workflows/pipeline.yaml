@@ -51,23 +51,23 @@ jobs:
         ./build.sh
 
     - name: Terraform Format
-      working-directory: ./iac
+      working-directory: src/iac
       run: terraform fmt
 
     - name: Terraform Init
-      working-directory: ./iac
+      working-directory: src/iac
       run: terraform init
     
     - name: Terraform Plan
-      working-directory: ./iac
+      working-directory: src/iac
       run: terraform plan
     
     - name: Terraform Apply or Destroy
       if: ${{ github.event.inputs.destroy != 'true' }}
-      working-directory: ./iac
+      working-directory: src/iac
       run: terraform apply -auto-approve
 
     - name: Terraform Destroy
       if: ${{ github.event.inputs.destroy == 'true' }}
-      working-directory: ./iac
+      working-directory: src/iac
       run: terraform destroy -auto-approve
