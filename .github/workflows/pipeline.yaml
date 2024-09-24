@@ -49,13 +49,9 @@ jobs:
         chmod +x build.sh
         ./build.sh
     
-  terraform:
-    needs: build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/iac
-    steps:
+    - name: Change Directory
+      run: cd iac
+      
     - name: Terraform Format
       run: terraform fmt
 
