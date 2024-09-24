@@ -31,14 +31,14 @@ jobs:
 
     - name: Checkout Code
       uses: actions/checkout@v3
-      
+
     - name: Zip Code
       run: |
         chmod +x build.sh
         ./build.sh
 
   terraform:
-    needs: build
+    needs: create_zip
     runs-on: ubuntu-latest
     defaults:
       run:
