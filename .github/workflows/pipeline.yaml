@@ -22,27 +22,11 @@ on:
         default: false
 
 jobs:
-  create_zip:
+  deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: src
-    steps:
-
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Zip Code
-      run: |
-        chmod +x build.sh
-        ./build.sh
-
-  terraform:
-    needs: create_zip
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/iac
     steps:
 
     - name: Checkout Code
@@ -61,19 +45,29 @@ jobs:
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v2
 
+    - name: Zip Code
+      run: |
+        chmod +x build.sh
+        ./build.sh
+
     - name: Terraform Format
+      working-directory: ./iac
       run: terraform fmt
 
     - name: Terraform Init
+      working-directory: ./iac
       run: terraform init
     
     - name: Terraform Plan
+      working-directory: ./iac
       run: terraform plan
     
     - name: Terraform Apply or Destroy
       if: ${{ github.event.inputs.destroy != 'true' }}
+      working-directory: ./iac
       run: terraform apply -auto-approve
 
     - name: Terraform Destroy
       if: ${{ github.event.inputs.destroy == 'true' }}
+      working-directory: ./iac
       run: terraform destroy -auto-approve
