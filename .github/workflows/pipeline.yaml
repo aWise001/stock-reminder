@@ -22,36 +22,45 @@ on:
         default: false
 
 jobs:
-  build:
+  create_zip:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: src
     steps:
+
     - name: Checkout Code
       uses: actions/checkout@v3
-    
+      
+    - name: Zip Code
+      run: |
+        chmod +x build.sh
+        ./build.sh
+
+  terraform:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/iac
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
     - name: Set Up Python
       uses: actions/setup-python@v2
-    
+
     - name: Set Up AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
-    
+
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v2
-    
-    - name: Zip Code
-      run: |
-        chmod +x build.sh
-        ./build.sh
-    
-    - name: Change Directory
-      run: cd iac
-      
+
     - name: Terraform Format
       run: terraform fmt
 
