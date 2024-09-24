@@ -20,10 +20,10 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-module "tf-state" {
-  source      = "./modules/tf-state"
-  bucket_name = "stock-reminder-tf-state-backend"
-}
+# module "tf-state" {
+#   source      = "./modules/tf-state"
+#   bucket_name = "stock-reminder-tf-state-backend"
+# }
 
 module "lambdaIAM" {
   source = "./modules/iam"

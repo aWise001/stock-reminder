@@ -1,5 +1,5 @@
 data "archive_file" "zip_file" {
-  type = "zip"
+  type        = "zip"
   source_file = var.path_to_source_file
   output_path = var.path_to_artifact
 }
