@@ -4,6 +4,8 @@
         {
             "Action": [
                 "secretsmanager:GetSecretValue",
+                "lambda:ListLayerVersions",
+                "lambda:GetLayerVersion",
                 "logs:*"
             ],
             "Effect": "Allow",
