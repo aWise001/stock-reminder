@@ -1,6 +1,5 @@
 import main
 
 def lambda_handler(event, context):
-
-    df = main()
+    df = main.main()
     return df
