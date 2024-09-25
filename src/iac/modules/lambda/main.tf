@@ -14,6 +14,8 @@ resource "aws_lambda_function" "stock_reminder_lambda" {
   memory_size = var.memory_size
   timeout     = var.timeout
 
+  depends_on = [ data.archive_file.zip_file ]
+
   source_code_hash = filebase64sha256(var.path_to_artifact)
 
   runtime = var.runtime
