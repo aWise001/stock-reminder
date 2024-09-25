@@ -1,2 +1,2 @@
 #!/bin/bash
-pip install --target ./package -r requirements.txt
+pip install --target ./python/package -r requirements.txt
