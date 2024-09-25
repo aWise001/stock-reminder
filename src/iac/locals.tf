@@ -5,10 +5,10 @@ locals {
   lambda_iam_role_path   = "./modules/iam/lambda-assume-role-policy.json"
 
   path_to_source_directory = "../python/"
-  path_to_artifact    = "../lambda_function.zip"
-  function_name       = "lambda_function"
-  function_handler    = "lambda_function.lambda_handler"
-  memory_size         = 512
-  timeout             = 300
-  runtime             = "python3.9"
+  path_to_artifact         = "../lambda_function.zip"
+  function_name            = "lambda_function"
+  function_handler         = "lambda_function.lambda_handler"
+  memory_size              = 512
+  timeout                  = 300
+  runtime                  = "python3.9"
 }

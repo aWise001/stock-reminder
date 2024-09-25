@@ -37,12 +37,12 @@ module "lambdaIAM" {
 module "lambdaFunction" {
   source = "./modules/lambda"
 
-  lambda_iam_role_arn = module.lambdaIAM.lambda_iam_role_arn
-  path_to_source_file = local.path_to_source_file
-  path_to_artifact    = local.path_to_artifact
-  function_name       = local.function_name
-  function_handler    = local.function_handler
-  memory_size         = local.memory_size
-  timeout             = local.timeout
-  runtime             = local.runtime
+  lambda_iam_role_arn      = module.lambdaIAM.lambda_iam_role_arn
+  path_to_source_directory = local.path_to_source_directory
+  path_to_artifact         = local.path_to_artifact
+  function_name            = local.function_name
+  function_handler         = local.function_handler
+  memory_size              = local.memory_size
+  timeout                  = local.timeout
+  runtime                  = local.runtime
 }
