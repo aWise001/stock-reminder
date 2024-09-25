@@ -48,6 +48,7 @@ def main():
     df_products.insert(2, "orders_per_day", orders_per_day, allow_duplicates=True)
     df_products.insert(3, "days_of_stock_remaining", days_of_stock_remaining, allow_duplicates=True)
     df_products = df_products.fillna(0)
-    print(df_products.to_string())
+    return df_products.head().to_json()
+
 if __name__ == "__main__":
     main()

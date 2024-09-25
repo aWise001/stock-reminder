@@ -1,5 +1,6 @@
+import main
+
 def lambda_handler(event, context):
-    return {
-        'statusCode': 200,
-        'body': 'Hello from Lambda!'
-    }
+
+    df = main()
+    return df
