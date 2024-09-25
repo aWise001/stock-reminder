@@ -12,5 +12,5 @@ locals {
   timeout                  = 300
   runtime                  = "python3.9"
 
-  aws_secrets_layer_name   = "AWS-Parameters-and-Secrets-Lambda-Extension"
+  aws_secrets_layer_name   = "arn:aws:lambda:eu-west-2:177933569100:layer:AWS-Parameters-and-Secrets-Lambda-Extension"
 }
