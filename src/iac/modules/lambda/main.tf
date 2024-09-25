@@ -5,10 +5,6 @@ data "archive_file" "zip_file" {
   source_dir = var.path_to_source_directory
 }
 
-data "aws_lambda_layer_version" "aws_secrets_extension" {
-  layer_name = var.aws_secrets_layer_name
-}
-
 resource "aws_lambda_function" "stock_reminder_lambda" {
   filename      = var.path_to_artifact
   function_name = var.function_name
@@ -24,5 +20,5 @@ resource "aws_lambda_function" "stock_reminder_lambda" {
 
   runtime = var.runtime
 
-  layers = [data.aws_lambda_layer_version.aws_secrets_extension.arn]
+  layers = [var.aws_secrets_layer_name]
 }
