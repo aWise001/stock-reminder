@@ -37,3 +37,8 @@ variable "runtime" {
   description = "Lambda Runtime"
   type        = string
 }
+
+variable "aws_secrets_layer_name" {
+  description = "name for the aws layer parameters and secrets extension"
+  type        = string
+}

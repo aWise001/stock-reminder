@@ -45,4 +45,5 @@ module "lambdaFunction" {
   memory_size              = local.memory_size
   timeout                  = local.timeout
   runtime                  = local.runtime
+  aws_secrets_layer_name   = local.aws_secrets_layer_name
 }

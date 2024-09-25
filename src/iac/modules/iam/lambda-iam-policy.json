@@ -3,6 +3,7 @@
     "Statement": [
         {
             "Action": [
+                "secretsmanager:GetSecretValue",
                 "logs:*"
             ],
             "Effect": "Allow",

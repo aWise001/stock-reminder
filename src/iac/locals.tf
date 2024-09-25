@@ -11,4 +11,6 @@ locals {
   memory_size              = 512
   timeout                  = 300
   runtime                  = "python3.9"
+
+  aws_secrets_layer_name   = "AWS-Parameters-and-Secrets-Lambda-Extension"
 }
