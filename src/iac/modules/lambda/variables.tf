@@ -3,7 +3,7 @@ variable "lambda_iam_role_arn" {
   type        = string
 }
 
-variable "path_to_source_file" {
+variable "path_to_source_directory" {
   description = "Path to Lambda Fucntion Source Code"
   type        = string
 }

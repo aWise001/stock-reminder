@@ -45,10 +45,10 @@ jobs:
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v2
 
-    # - name: Zip Code
-    #   run: |
-    #     chmod +x build.sh
-    #     ./build.sh
+    - name: install packages
+      run: |
+        chmod +x build.sh
+        ./build.sh
 
     - name: Terraform Format
       working-directory: src/iac

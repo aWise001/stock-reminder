@@ -1,7 +1,8 @@
 data "archive_file" "zip_file" {
   type        = "zip"
-  source_file = var.path_to_source_file
   output_path = var.path_to_artifact
+
+  source_dir = var.path_to_source_directory
 }
 
 resource "aws_lambda_function" "stock_reminder_lambda" {
