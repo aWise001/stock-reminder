@@ -1,3 +1,4 @@
+import json
 import os
 
 import pandas as pd
@@ -13,12 +14,12 @@ def lambda_handler(event, context):
     r = requests.get(secrets_url, headers=headers)
     if r.status_code == 200:
         data = r.json()
-    secrets = data["SecretString"]
+    secrets = json.loads(data["SecretString"])
     print(secrets)
-    print(secrets[0])
+    print(secrets["secret-key"])
     print(secrets[1])
 
-    return secrets[0]
+    return secrets
 
     # # define product fields to get
     # product_fields = ["id", "title", "status", "variants"]
