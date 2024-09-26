@@ -14,11 +14,11 @@ resource "aws_ses_domain_dkim" "ses_dkim" {
     domain = aws_ses_domain_identity.ses_domain.domain
 }
 
-# resource "aws_route53_record" "dkim_record" {
-#     count = length(aws_ses_domain_dkim.ses_dkim.dkim_tokens)
-#     zone_id = var.zone_id
-#     name = "${element(aws_ses_domain_dkim.ses_dkim.dkim_tokens, count.index)}._domainkey.${var.domain_name}"
-#     type = var.dkim_record_type
-#     ttl = var.ttl
-#     records = ["${element(aws_ses_domain_dkim.ses_dkim.dkim_tokens, count.index)}.dkim.amazonses.com"]
-# }
+resource "aws_route53_record" "dkim_record" {
+    count = length(aws_ses_domain_dkim.ses_dkim.dkim_tokens)
+    zone_id = var.zone_id
+    name = "${element(aws_ses_domain_dkim.ses_dkim.dkim_tokens, count.index)}._domainkey.${var.domain_name}"
+    type = var.dkim_record_type
+    ttl = var.ttl
+    records = ["${element(aws_ses_domain_dkim.ses_dkim.dkim_tokens, count.index)}.dkim.amazonses.com"]
+}
