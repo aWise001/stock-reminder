@@ -4,6 +4,12 @@ locals {
   lambda_iam_role_name   = "lambda_iam_role"
   lambda_iam_role_path   = "./modules/iam/lambda-assume-role-policy.json"
 
+  domain_name = "stockreminderdomain.com"
+  zone_id = "Z02760782DJJH18ZS0A9U"
+  domain_identity_type = "TXT"
+  ttl = 600
+  dkim_record_type = "CNAME"
+
   path_to_source_directory = "../python/"
   path_to_artifact         = "../lambda_function.zip"
   function_name            = "lambda_function"

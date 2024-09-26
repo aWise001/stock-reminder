@@ -4,6 +4,8 @@
         {
             "Action": [
                 "secretsmanager:GetSecretValue",
+                "ses:SendEmail",
+                "ses:SendRawEmail",
                 "lambda:ListLayerVersions",
                 "lambda:GetLayerVersion",
                 "logs:*"

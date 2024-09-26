@@ -34,6 +34,16 @@ module "lambdaIAM" {
   lambda_iam_role_path   = local.lambda_iam_role_path
 }
 
+module "ses" {
+  source = "./modules/ses"
+
+  domain_name = local.domain_name
+  zone_id = local.zone_id
+  domain_identity_type = local.domain_identity_type
+  ttl = local.ttl
+  dkim_record_type = local.dkim_record_type
+}
+
 module "lambdaFunction" {
   source = "./modules/lambda"
 
