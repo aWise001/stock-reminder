@@ -14,8 +14,9 @@ def lambda_handler(event, context):
     if r.status_code == 200:
         data = r.json()
     secrets = data["SecretString"]
-
-
+    print(secrets)
+    print(secrets[0])
+    print(secrets[1])
 
     return secrets[0]
 
