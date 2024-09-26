@@ -1,4 +1,2 @@
-ShopifyAPI
-python-dotenv
 requests
 pandas

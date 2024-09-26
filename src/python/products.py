@@ -10,8 +10,8 @@ def get_active_products(field_list, secrets):
     private_key = secrets["PRIVATE_KEY"]
 
     headers = {
-    "X-Shopify-Access-Token": private_key,
-    "Content-Type": "application/json"
+        "X-Shopify-Access-Token": private_key,
+        "Content-Type": "application/json"
     }
 
     fields = ""
