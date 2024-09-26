@@ -60,4 +60,4 @@ def lambda_handler(event, context):
     df_products.insert(3, "days_of_stock_remaining", days_of_stock_remaining, allow_duplicates=True)
     df_products = df_products.fillna(0)
 
-    return df_products.head()
+    return df_products.head().to_json()
