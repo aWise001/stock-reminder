@@ -1,21 +1,19 @@
-from dotenv import load_dotenv
-import requests
-
 import os
 
-load_dotenv()
-
-shop_url = os.getenv("SHOP_URL")
-api_version = os.getenv("API_VER")
-private_app_password = os.getenv("PRIVATE_KEY")
+import requests
 
 
-headers = {
-    "X-Shopify-Access-Token": private_app_password,
+def get_active_products(field_list, secrets):
+
+    shop_url = secrets["SHOP_URL"]
+    api_version = secrets["API_VERSION"]
+    private_key = secrets["PRIVATE_KEY"]
+
+    headers = {
+    "X-Shopify-Access-Token": private_key,
     "Content-Type": "application/json"
-}
+    }
 
-def get_active_products(field_list):
     fields = ""
     for i in range(len(field_list)):
         if i == 0:

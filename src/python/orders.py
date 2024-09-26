@@ -1,25 +1,22 @@
-from dotenv import load_dotenv
-import requests
-
 import os
 import re
 
-load_dotenv()
-
-# retrieve environment variables
-shop_url = os.getenv("SHOP_URL")
-api_version = os.getenv("API_VER")
-private_app_password = os.getenv("PRIVATE_KEY")
+import requests
 
 created_at_min = "2024-03-01"
 
-# define header
-headers = {
-    "X-Shopify-Access-Token": private_app_password,
-    "Content-Type": "application/json"
-}
+def get_orders(field_list, secrets):
 
-def get_orders(field_list):
+    shop_url = secrets["SHOP_URL"]
+    api_version = secrets["API_VERSION"]
+    private_key = secrets["PRIVATE_KEY"]
+
+    # define header
+    headers = {
+        "X-Shopify-Access-Token": private_key,
+        "Content-Type": "application/json"
+    }
+
     # create field string and add ASCII code for comma in between fields
     fields = ""
     for i in range(len(field_list)):
@@ -71,7 +68,7 @@ def get_single_order(order_ID, field_list):
             fields += field_list[i]
         else:
             fields += f"%2C{field_list[i]}"
-    
+
     endpoint = f"https://{shop_url}/admin/api/{api_version}/orders/{order_ID}.json?fields={fields}"
 
     response = requests.get(endpoint, headers=headers)
