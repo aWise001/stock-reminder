@@ -25,7 +25,6 @@ resource "aws_lambda_function" "stock_reminder_lambda" {
 }
 
 resource "aws_cloudwatch_event_rule" "lambda_scheduler" {
-  name                = var.event_rule_name
   schedule_expression = var.schedule_expression
 }
 
