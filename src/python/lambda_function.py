@@ -72,7 +72,7 @@ def lambda_handler(event, context):
     subject = "stock reminder - TEST!"
 
     # init client
-    client = boto3.client('ses', region='eu-west-2')
+    client = boto3.client('ses', region_name='eu-west-2')
 
     # send email
     response = client.send_email(
