@@ -4,7 +4,7 @@ resource "aws_ses_domain_identity" "ses_domain" {
 
 resource "aws_route53_record" "domain_identity_record" {
     zone_id = var.zone_id
-    name = aws_ses_domain_identity.ses_domain.verification_token
+    name = "_amazonses.${aws_ses_domain_identity.ses_domain.id}"
     type = var.domain_identity_type
     ttl = var.ttl
     records = [aws_ses_domain_identity.ses_domain.verification_token]
