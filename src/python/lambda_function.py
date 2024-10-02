@@ -67,7 +67,7 @@ def lambda_handler(event, context):
     df_products = df_products.fillna(0)
 
     # define email args
-    sender = "stockreminderdomain.com"
+    sender = "automatedreminder@stockreminderdomain.com"
     recipient = "axel.wise@ba.com"
     subject = "stock reminder - TEST!"
 
