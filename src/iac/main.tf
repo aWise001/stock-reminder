@@ -47,6 +47,7 @@ module "ses" {
 module "lambdaFunction" {
   source = "./modules/lambda"
 
+  archive_file_type        = local.archive_file_type
   lambda_iam_role_arn      = module.lambdaIAM.lambda_iam_role_arn
   path_to_source_directory = local.path_to_source_directory
   path_to_artifact         = local.path_to_artifact
@@ -57,4 +58,9 @@ module "lambdaFunction" {
   timeout                  = local.timeout
   runtime                  = local.runtime
   aws_secrets_layer_name   = local.aws_secrets_layer_name
+  event_rule_name          = local.event_rule_name
+  schedule_expression      = local.schedule_expression
+  statement_id = local.statement_id
+  cloudwatch_action = local.cloudwatch_action
+  event_principal = local.event_principal
 }

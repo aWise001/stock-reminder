@@ -10,6 +10,7 @@ locals {
   ttl = 600
   dkim_record_type = "CNAME"
 
+  archive_file_type        = "zip"
   path_to_source_directory = "../python/"
   path_to_artifact         = "../lambda_function.zip"
   excluded_file            = "../python/main.py"
@@ -18,6 +19,11 @@ locals {
   memory_size              = 512
   timeout                  = 300
   runtime                  = "python3.9"
+  event_rule_name          = "lambda scheduler"
+  schedule_expression      = "rate(7 days)"
+  statement_id             = "AllowExecutionFromCloudWatch"
+  cloudwatch_action        = "lambda:InvokeFunction"
+  event_principal          = "events.amazonaws.com"
 
   aws_secrets_layer_name   = "arn:aws:lambda:eu-west-2:133256977650:layer:AWS-Parameters-and-Secrets-Lambda-Extension:12"
 }

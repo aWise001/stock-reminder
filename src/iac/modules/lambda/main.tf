@@ -1,5 +1,5 @@
 data "archive_file" "zip_file" {
-  type        = "zip"
+  type        = var.archive_file_type
   output_path = var.path_to_artifact
   excludes = [ var.excluded_file ]
 
@@ -22,4 +22,22 @@ resource "aws_lambda_function" "stock_reminder_lambda" {
   runtime = var.runtime
 
   layers = [var.aws_secrets_layer_name]
+}
+
+resource "aws_cloudwatch_event_rule" "lambda_scheduler" {
+  name                = var.event_rule_name
+  schedule_expression = var.schedule_expression
+}
+
+resource "aws_cloudwatch_event_target" "event_target" {
+  rule = aws_cloudwatch_event_rule.lambda_scheduler.name
+  arn  = aws_lambda_function.stock_reminder_lambda.arn
+}
+
+resource "aws_lambda_permission" "cloudwatch_permission" {
+  statement_id = var.statement_id
+  action = var.cloudwatch_action
+  function_name = aws_lambda_function.stock_reminder_lambda.function_name
+  principal = var.event_principal
+  source_arn = aws_cloudwatch_event_rule.lambda_scheduler.arn
 }
