@@ -19,7 +19,7 @@ locals {
   memory_size              = 512
   timeout                  = 300
   runtime                  = "python3.9"
-  event_rule_name          = "lambda scheduler"
+  event_rule_name          = "lambda-scheduler"
   schedule_expression      = "rate(7 days)"
   statement_id             = "AllowExecutionFromCloudWatch"
   cloudwatch_action        = "lambda:InvokeFunction"
