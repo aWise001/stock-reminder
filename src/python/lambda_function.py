@@ -68,7 +68,7 @@ def lambda_handler(event, context):
 
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
-    recipient = "info@yijiu.store"
+    recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
     subject = "stock reminder - TEST"
     body = f"This is a test email sent from an automated lambda function,\n\n{df_products.head().to_string()}"
 
@@ -78,7 +78,7 @@ def lambda_handler(event, context):
     # send email
     response = client.send_email(
         Destination={
-            'ToAddresses': [recipient]
+            'ToAddresses': recipients
         },
         Message={
             'Body': {

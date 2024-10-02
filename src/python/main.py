@@ -1,7 +1,7 @@
 import pandas as pd
-
 from orders import get_orders, get_single_order
 from products import get_active_products
+
 
 def main():
     # define product fields to get
@@ -32,7 +32,7 @@ def main():
                 else:
                     times_ordered[item_name] = 1
     order_series = pd.Series(times_ordered)
-    
+
     df_products = pd.DataFrame({'quantity': product_series, 'times_ordered': order_series})
     df_products = df_products.fillna(0)
 
@@ -42,8 +42,11 @@ def main():
     for index, row in df_products.iterrows():
         average_orders_sold = row['times_ordered'] / days
         orders_per_day.append(average_orders_sold)
-        days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
-    
+        if row['quantity'] == 0:
+            days_of_stock_remaining.append(0)
+        else:
+            days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
+
     df_products.insert(2, "orders_per_day", orders_per_day, allow_duplicates=True)
     df_products.insert(3, "days_of_stock_remaining", days_of_stock_remaining, allow_duplicates=True)
     df_products = df_products.fillna(0)
