@@ -22,3 +22,8 @@ resource "aws_route53_record" "dkim_record" {
     ttl = var.ttl
     records = ["${element(aws_ses_domain_dkim.ses_dkim.dkim_tokens, count.index)}.dkim.amazonses.com"]
 }
+
+resource "aws_ses_domain_identity_verification" "name" {
+  domain = aws_ses_domain_identity.ses_domain.id
+  depends_on = [ aws_route53_record.domain_identity_record ]
+}
