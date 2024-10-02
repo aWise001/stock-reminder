@@ -83,7 +83,7 @@ def lambda_handler(event, context):
             'Body': {
                 'Text': {
                     'Charset': 'UTF-8',
-                    'Data': df_products.head()
+                    'Data': df_products.head().to_string()
                 }
             },
             'Subject': {
