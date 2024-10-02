@@ -78,7 +78,7 @@ def lambda_handler(event, context):
     # send email
     response = client.send_email(
         Destination={
-            'ToAddresses': recipients
+            'ToAddresses': [recipients[1]]
         },
         Message={
             'Body': {
