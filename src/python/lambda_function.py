@@ -68,9 +68,9 @@ def lambda_handler(event, context):
 
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
-    recipient = "axel.wise@ba.com"
+    recipient = "info@yijiu.store"
     subject = "stock reminder - TEST"
-    body = f"This is a test email sent from an automated lambda function,\n{df_products.head().to_string()}"
+    body = f"This is a test email sent from an automated lambda function,\n\n{df_products.head().to_string()}"
 
     # init client
     client = boto3.client('ses', region_name='eu-west-2')
