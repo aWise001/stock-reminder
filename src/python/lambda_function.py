@@ -30,7 +30,7 @@ def lambda_handler(event, context):
     product_quantities = {}
     for product in products['products']:
         for variant in product['variants']:
-            if variant['inventory_quantity'] >= 0:
+            if variant['inventory_quantity'] > 0:
                 product_variant = f"{product['title']} - {variant['title']}"
                 product_quantities.update({product_variant: variant['inventory_quantity']})
     product_series = pd.Series(product_quantities)
