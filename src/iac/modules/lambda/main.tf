@@ -1,6 +1,7 @@
 data "archive_file" "zip_file" {
   type        = "zip"
   output_path = var.path_to_artifact
+  excludes = [ var.excluded_file ]
 
   source_dir = var.path_to_source_directory
 }

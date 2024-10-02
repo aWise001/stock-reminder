@@ -13,6 +13,11 @@ variable "path_to_artifact" {
   type        = string
 }
 
+variable "excluded_file" {
+  description = "file to be excluded from zip"
+  type = string
+}
+
 variable "function_name" {
   description = "Name of Lambda Function"
   type        = string

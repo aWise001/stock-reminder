@@ -12,6 +12,7 @@ locals {
 
   path_to_source_directory = "../python/"
   path_to_artifact         = "../lambda_function.zip"
+  excluded_file            = "../python/main.py"
   function_name            = "lambda_function"
   function_handler         = "lambda_function.lambda_handler"
   memory_size              = 512

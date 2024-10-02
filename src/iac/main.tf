@@ -50,6 +50,7 @@ module "lambdaFunction" {
   lambda_iam_role_arn      = module.lambdaIAM.lambda_iam_role_arn
   path_to_source_directory = local.path_to_source_directory
   path_to_artifact         = local.path_to_artifact
+  excluded_file            = local.excluded_file
   function_name            = local.function_name
   function_handler         = local.function_handler
   memory_size              = local.memory_size
