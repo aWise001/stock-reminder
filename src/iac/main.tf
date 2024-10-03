@@ -44,15 +44,15 @@ module "ses" {
   dkim_record_type     = local.dkim_record_type
 }
 
-module "lambda_layer" {
-  source = "./modules/lambda_layer"
+# module "lambda_layer" {
+#   source = "./modules/lambda_layer"
 
-  path_to_layer_source      = local.path_to_layer_source
-  path_to_layer_artifact    = local.path_to_layer_artifact
-  requirements_layer_name   = local.requirements_layer_name
-  compatible_layer_runtimes = local.compatible_layer_runtimes
-  compatible_architectures  = local.compatible_architectures
-}
+#   path_to_layer_source      = local.path_to_layer_source
+#   path_to_layer_artifact    = local.path_to_layer_artifact
+#   requirements_layer_name   = local.requirements_layer_name
+#   compatible_layer_runtimes = local.compatible_layer_runtimes
+#   compatible_architectures  = local.compatible_architectures
+# }
 
 module "lambdaFunction" {
   source = "./modules/lambda"

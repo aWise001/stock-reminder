@@ -1,2 +1,2 @@
 #!/bin/bash
-pip install --target ./requirements -r requirements.txt
+pip install --target ./python -r requirements.txt

@@ -10,11 +10,11 @@ locals {
   ttl                  = 600
   dkim_record_type     = "CNAME"
 
-  path_to_layer_source      = "../requirements/"
-  path_to_layer_artifact    = "../artifacts/requirements.zip"
-  requirements_layer_name   = "requirements"
-  compatible_layer_runtimes = ["python3.9"]
-  compatible_architectures  = ["x86_64"]
+  # path_to_layer_source      = "../requirements/"
+  # path_to_layer_artifact    = "../artifacts/requirements.zip"
+  # requirements_layer_name   = "requirements"
+  # compatible_layer_runtimes = ["python3.9"]
+  # compatible_architectures  = ["x86_64"]
 
   archive_file_type        = "zip"
   path_to_source_directory = "../python/"

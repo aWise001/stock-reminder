@@ -21,7 +21,7 @@ resource "aws_lambda_function" "stock_reminder_lambda" {
 
   runtime = var.runtime
 
-  layers = [var.aws_secrets_layer_name, var.lambda_layer_arn]
+  layers = [var.aws_secrets_layer_name]
 }
 
 resource "aws_cloudwatch_event_rule" "lambda_scheduler" {
