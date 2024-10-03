@@ -37,11 +37,21 @@ module "lambdaIAM" {
 module "ses" {
   source = "./modules/ses"
 
-  domain_name = local.domain_name
-  zone_id = local.zone_id
+  domain_name          = local.domain_name
+  zone_id              = local.zone_id
   domain_identity_type = local.domain_identity_type
-  ttl = local.ttl
-  dkim_record_type = local.dkim_record_type
+  ttl                  = local.ttl
+  dkim_record_type     = local.dkim_record_type
+}
+
+module "lambda_layer" {
+  source = "./modules/lambda_layer"
+
+  path_to_layer_source      = local.path_to_layer_source
+  path_to_layer_artifact    = local.path_to_layer_artifact
+  requirements_layer_name   = local.requirements_layer_name
+  compatible_layer_runtimes = local.compatible_layer_runtimes
+  compatible_architectures  = local.compatible_architectures
 }
 
 module "lambdaFunction" {
@@ -57,10 +67,11 @@ module "lambdaFunction" {
   memory_size              = local.memory_size
   timeout                  = local.timeout
   runtime                  = local.runtime
+  lambda_layer_arn         = module.lambda_layer.requirements_layer_arn
   aws_secrets_layer_name   = local.aws_secrets_layer_name
   event_rule_name          = local.event_rule_name
   schedule_expression      = local.schedule_expression
-  statement_id = local.statement_id
-  cloudwatch_action = local.cloudwatch_action
-  event_principal = local.event_principal
+  statement_id             = local.statement_id
+  cloudwatch_action        = local.cloudwatch_action
+  event_principal          = local.event_principal
 }

@@ -1,6 +1,6 @@
 variable "archive_file_type" {
   description = "type of archive to produce"
-  type = string
+  type        = string
 }
 
 variable "lambda_iam_role_arn" {
@@ -20,7 +20,7 @@ variable "path_to_artifact" {
 
 variable "excluded_file" {
   description = "file to be excluded from zip"
-  type = string
+  type        = string
 }
 
 variable "function_name" {
@@ -48,6 +48,11 @@ variable "runtime" {
   type        = string
 }
 
+variable "lambda_layer_arn" {
+  description = "arn for lambda layer"
+  type        = string
+}
+
 variable "aws_secrets_layer_name" {
   description = "name for the aws layer parameters and secrets extension"
   type        = string
@@ -55,25 +60,25 @@ variable "aws_secrets_layer_name" {
 
 variable "event_rule_name" {
   description = "name of cloudwatch event rule"
-  type = string
+  type        = string
 }
 
 variable "schedule_expression" {
   description = "how often to schedule lambda"
-  type = string
+  type        = string
 }
 
 variable "statement_id" {
   description = "unique statement identifier"
-  type = string
+  type        = string
 }
 
 variable "cloudwatch_action" {
   description = "aws lambda action"
-  type = string
+  type        = string
 }
 
 variable "event_principal" {
   description = "principal which is given permission"
-  type = string
+  type        = string
 }
