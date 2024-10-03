@@ -57,9 +57,10 @@ def lambda_handler(event, context):
     orders_per_day = []
     days_of_stock_remaining = []
     for index, row in df_products.iterrows():
-        average_orders_sold = row['times_ordered'] / days
-        orders_per_day.append(average_orders_sold)
-        days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
+        if row['times_ordered'] != 0:
+            average_orders_sold = row['times_ordered'] / days
+            orders_per_day.append(average_orders_sold)
+            days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
 
     # append to DataFrame
     df_products.insert(2, "orders_per_day", orders_per_day, allow_duplicates=True)
