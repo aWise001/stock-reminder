@@ -48,10 +48,10 @@ variable "runtime" {
   type        = string
 }
 
-variable "lambda_layer_arn" {
-  description = "arn for lambda layer"
-  type        = string
-}
+# variable "lambda_layer_arn" {
+#   description = "arn for lambda layer"
+#   type        = string
+# }
 
 variable "aws_secrets_layer_name" {
   description = "name for the aws layer parameters and secrets extension"

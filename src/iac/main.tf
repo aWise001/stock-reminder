@@ -67,7 +67,7 @@ module "lambdaFunction" {
   memory_size              = local.memory_size
   timeout                  = local.timeout
   runtime                  = local.runtime
-  lambda_layer_arn         = module.lambda_layer.requirements_layer_arn
+  # lambda_layer_arn         = module.lambda_layer.requirements_layer_arn
   aws_secrets_layer_name   = local.aws_secrets_layer_name
   event_rule_name          = local.event_rule_name
   schedule_expression      = local.schedule_expression
