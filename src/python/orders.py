@@ -50,7 +50,6 @@ def get_orders(field_list, secrets):
             print(f"Response: {response.text}")
     return data
 
-
 def get_next_page(header_link):
     links = header_link.split(", ")
     next_page_link = None
@@ -58,24 +57,3 @@ def get_next_page(header_link):
         if re.search('rel="next"', link):
             next_page_link = link[1:-13]
     return next_page_link
-
-
-
-def get_single_order(order_ID, field_list):
-    fields = ""
-    for i in range(len(field_list)):
-        if i == 0:
-            fields += field_list[i]
-        else:
-            fields += f"%2C{field_list[i]}"
-
-    endpoint = f"https://{shop_url}/admin/api/{api_version}/orders/{order_ID}.json?fields={fields}"
-
-    response = requests.get(endpoint, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-    else:
-        print(f"Request failed with status code: {response.status_code}")
-        print(f"Response: {response.text}")
-
-    return data

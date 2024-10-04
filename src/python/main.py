@@ -5,11 +5,11 @@ from products import get_active_products
 
 def main():
     # define product fields to get
-    product_fields = ["id", "title", "status", "variants"]
+    product_fields = ["title", "variants"]
     # get products
     products = get_active_products(product_fields)
     # define order fields
-    order_fields = ["id", "created_at", "total_price", "number", "line_items"]
+    order_fields = ["id", "line_items"]
     # get orders
     orders = get_orders(order_fields)
 
