@@ -54,20 +54,25 @@ def lambda_handler(event, context):
 
     # calculate average orders per day and days of stock remaining for each product variant
     days = 193
+    restock_time = 20
     orders_per_day = []
     days_of_stock_remaining = []
+    days_to_restock = []
     for index, row in df_products.iterrows():
         if row['times_ordered'] != 0:
             average_orders_sold = row['times_ordered'] / days
             orders_per_day.append(average_orders_sold)
             days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
+            days_to_restock.append(days_of_stock_remaining[index] - restock_time)
         else:
             orders_per_day.append(0)
             days_of_stock_remaining.append("n/a")
+            days_to_restock.append("n/a")
 
     # append to DataFrame
     df_products.insert(2, "orders_per_day", orders_per_day, allow_duplicates=True)
     df_products.insert(3, "days_of_stock_remaining", days_of_stock_remaining, allow_duplicates=True)
+    df_products.insert(4, "days_to_restock", days_to_restock, allow_duplicates=True)
     df_products = df_products.fillna(0)
 
     # define email args
