@@ -53,8 +53,8 @@ def lambda_handler(event, context):
     df_products = df_products.fillna(0)
 
     # calculate average orders per day and days of stock remaining for each product variant
-    days = 193
-    restock_time = 20
+    days = 30
+    restock_time = 25
     orders_per_day = []
     days_of_stock_remaining = []
     days_to_restock = []
@@ -75,11 +75,19 @@ def lambda_handler(event, context):
     df_products.insert(4, "days_to_restock", days_to_restock, allow_duplicates=True)
     df_products = df_products.fillna(0)
 
+    # create list of products with less than 5 days of stock remaining minus restock time
+    restock_list = []
+    for index, row in df_products.iterrows():
+        if row['days_to_restock'] <= 5:
+            restock_list.append([row[0], row['days_to_restock']])
+
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
     recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
     subject = "stock reminder - TEST"
-    body = f"This is a test email sent from an automated lambda function,\n\n{df_products.head().to_string()}"
+    body = "This is a test email sent from an automated lambda function,\n\n"
+    for i in restock_list:
+        body += f"product: {restock_list[i][0]}, days to restock: {restock_list[i][1]}\n"
 
     # init client
     client = boto3.client('ses', region_name='eu-west-2')
