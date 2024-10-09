@@ -78,7 +78,7 @@ def lambda_handler(event, context):
     # create list of products with less than 5 days of stock remaining minus restock time
     restock_list = []
     for index, row in df_products.iterrows():
-        if int(row['days_to_restock']) <= 5:
+        if row['days_to_restock'] != "n/a" and row['days_to_restock'] <= 5:
             restock_list.append([row[0], row['days_to_restock']])
 
     # define email args
