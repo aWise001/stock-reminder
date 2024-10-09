@@ -79,7 +79,7 @@ def lambda_handler(event, context):
     restock_list = []
     for index, row in df_products.iterrows():
         if row['days_to_restock'] != "n/a" and row['days_to_restock'] <= 5:
-            restock_list.append([row[0], row['days_to_restock']])
+            restock_list.append([row[1], row['days_to_restock']])
 
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
