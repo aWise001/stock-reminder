@@ -63,7 +63,7 @@ def lambda_handler(event, context):
             average_orders_sold = row['times_ordered'] / days
             orders_per_day.append(average_orders_sold)
             days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
-            days_to_restock.append(days_of_stock_remaining[index] - restock_time)
+            days_to_restock.append(days_of_stock_remaining[-1] - restock_time)
         else:
             orders_per_day.append(0)
             days_of_stock_remaining.append("n/a")
