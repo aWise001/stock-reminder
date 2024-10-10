@@ -49,8 +49,8 @@ def lambda_handler(event, context):
     order_series = pd.Series(times_ordered)
 
     # combine products and times ordered into DataFrame
-    # df_products = pd.DataFrame({'quantity': product_series, 'times_ordered': order_series})
     df_products = pd.concat([product_series, order_series], axis=1).reset_index()
+    df_products.set_axis(['product', 'quantity', 'times ordered'], axis=1, inplace=True)
     df_products = df_products.fillna(0)
 
     # calculate average orders per day and days of stock remaining for each product variant
@@ -59,36 +59,36 @@ def lambda_handler(event, context):
     orders_per_day = []
     days_of_stock_remaining = []
     days_to_restock = []
-    # for index, row in df_products.iterrows():
-    #     if row['times_ordered'] != 0:
-    #         average_orders_sold = row['times_ordered'] / days
-    #         orders_per_day.append(average_orders_sold)
-    #         days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
-    #         days_to_restock.append(days_of_stock_remaining[-1] - restock_time)
-    #     else:
-    #         orders_per_day.append(0)
-    #         days_of_stock_remaining.append("n/a")
-    #         days_to_restock.append("n/a")
+    for index, row in df_products.iterrows():
+        if row['times ordered'] != 0:
+            average_orders_sold = row['times ordered'] / days
+            orders_per_day.append(average_orders_sold)
+            days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
+            days_to_restock.append(days_of_stock_remaining[-1] - restock_time)
+        else:
+            orders_per_day.append(0)
+            days_of_stock_remaining.append("n/a")
+            days_to_restock.append("n/a")
 
-    # # append to DataFrame
-    # df_products.insert(2, "orders_per_day", orders_per_day, allow_duplicates=True)
-    # df_products.insert(3, "days_of_stock_remaining", days_of_stock_remaining, allow_duplicates=True)
-    # df_products.insert(4, "days_to_restock", days_to_restock, allow_duplicates=True)
-    # df_products = df_products.fillna(0)
+    # append to DataFrame
+    df_products.insert(3, "orders per day", orders_per_day, allow_duplicates=True)
+    df_products.insert(4, "days of stock remaining", days_of_stock_remaining, allow_duplicates=True)
+    df_products.insert(5, "days to restock", days_to_restock, allow_duplicates=True)
+    df_products = df_products.fillna(0)
 
     # create list of products with less than 5 days of stock remaining minus restock time
-    # restock_list = []
-    # for index, row in df_products.iterrows():
-    #     if row['days_to_restock'] != "n/a" and row['days_to_restock'] <= 5:
-    #         restock_list.append([row[1], row['days_to_restock']])
+    restock_list = []
+    for index, row in df_products.iterrows():
+        if row['days to restock'] != "n/a" and row['days to restock'] <= 5:
+            restock_list.append([row['product'], row['days to restock']])
 
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
     recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
     subject = "stock reminder - TEST"
-    body = f"This is a test email sent from an automated lambda function,\n\n{df_products.head().to_string()}"
-    # for i in restock_list:
-    #     body += f"product: {i[0]}, days to restock: {i[1]}\n"
+    body = "This is a test email sent from an automated lambda function,\n\n"
+    for i in restock_list:
+        body += f"product: {i[0]}, days to restock: {i[1]}\n"
 
     # init client
     client = boto3.client('ses', region_name='eu-west-2')
