@@ -50,7 +50,7 @@ def lambda_handler(event, context):
 
     # combine products and times ordered into DataFrame
     df_products = pd.concat([product_series, order_series], axis=1).reset_index()
-    df_products.set_axis(['product', 'quantity', 'times ordered'], axis=1, inplace=True)
+    df_products.set_axis(['product', 'quantity', 'times ordered'], axis=1, copy=True)
     df_products = df_products.fillna(0)
 
     # calculate average orders per day and days of stock remaining for each product variant
