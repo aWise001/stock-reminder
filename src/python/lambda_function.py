@@ -89,9 +89,9 @@ def lambda_handler(event, context):
     recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
     todays_date = date.today()
     subject = f"Stock Reminder - {todays_date}"
-    body = "This is a test email sent from an automated lambda function,\n\n"
+    body = "This is an automated email containing a list of products you should consider restocking\n\n"
     for i in restock_list:
-        body += f"product: {i[0]}\n You should restock in: {i[1]} days\n\n"
+        body += f"product: {i[0]}\nYou should restock in: {i[1]} days\n\n"
 
     # init client
     client = boto3.client('ses', region_name='eu-west-2')
