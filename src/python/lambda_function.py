@@ -50,6 +50,7 @@ def lambda_handler(event, context):
 
     # combine products and times ordered into DataFrame
     df_products = pd.DataFrame({'quantity': product_series, 'times_ordered': order_series})
+    df_products = pd.concat([product_series, order_series], axis=1).reset_index
     df_products = df_products.fillna(0)
 
     # calculate average orders per day and days of stock remaining for each product variant
@@ -85,9 +86,9 @@ def lambda_handler(event, context):
     sender = "automatedreminder@stockreminderdomain.com"
     recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
     subject = "stock reminder - TEST"
-    body = "This is a test email sent from an automated lambda function,\n\n"
-    for i in restock_list:
-        body += f"product: {i[0]}, days to restock: {i[1]}\n"
+    body = f"This is a test email sent from an automated lambda function,\n\n{df_products.head().to_string()}"
+    # for i in restock_list:
+    #     body += f"product: {i[0]}, days to restock: {i[1]}\n"
 
     # init client
     client = boto3.client('ses', region_name='eu-west-2')
