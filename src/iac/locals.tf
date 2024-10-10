@@ -26,7 +26,7 @@ locals {
   timeout                  = 300
   runtime                  = "python3.9"
   event_rule_name          = "lambda-scheduler"
-  schedule_expression      = "rate(7 days)"
+  schedule_expression      = "rate(1 day)"
   statement_id             = "AllowExecutionFromCloudWatch"
   cloudwatch_action        = "lambda:InvokeFunction"
   event_principal          = "events.amazonaws.com"
