@@ -9,23 +9,28 @@ from orders import get_orders
 from products import get_active_products
 
 
-def lambda_handler(event, context):
-
-    # get AWS secret containing shopify key
+# get AWS secret containing shopify key
+def get_secrets(secret_name):
     headers = {"X-Aws-Parameters-Secrets-Token": os.environ.get('AWS_SESSION_TOKEN')}
-    secrets_url = "http://localhost:2773/secretsmanager/get?secretId=shopify-API-key"
+    secrets_url = f"http://localhost:2773/secretsmanager/get?secretId={secret_name}"
     r = requests.get(secrets_url, headers=headers)
     if r.status_code == 200:
         data = r.json()
     secrets = json.loads(data["SecretString"])
+    return secrets
+
+
+def lambda_handler(event, context):
+
+    shopify_secrets = get_secrets("shopify-API-key")
 
     # get products
     product_fields = ["id", "title", "status", "variants"]
-    products = get_active_products(product_fields, secrets)
+    products = get_active_products(product_fields, shopify_secrets)
 
     # get orders
     order_fields = ["id", "created_at", "total_price", "number", "line_items"]
-    orders = get_orders(order_fields, secrets)
+    orders = get_orders(order_fields, shopify_secrets)
 
     # populate series with product variant quantities
     product_quantities = {}
@@ -86,7 +91,8 @@ def lambda_handler(event, context):
 
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
-    recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
+    email_secrets = get_secrets("recipient-list")
+    recipients = [email_secrets["RECIPIENT_EMAIL"], email_secrets["DEV_EMAIL"]]
     todays_date = date.today()
     subject = f"Stock Reminder - {todays_date}"
     body = "This is an automated email containing a list of products you should consider restocking\n\n"
