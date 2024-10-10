@@ -63,8 +63,9 @@ def lambda_handler(event, context):
         if row['times ordered'] != 0:
             average_orders_sold = row['times ordered'] / days
             orders_per_day.append(average_orders_sold)
-            days_of_stock_remaining.append(row['quantity'] / average_orders_sold)
-            days_to_restock.append(days_of_stock_remaining[-1] - restock_time)
+            stock_remaining = round(row['quantity'] / average_orders_sold)
+            days_of_stock_remaining.append(stock_remaining)
+            days_to_restock.append(stock_remaining - restock_time)
         else:
             orders_per_day.append(0)
             days_of_stock_remaining.append("n/a")
@@ -87,7 +88,6 @@ def lambda_handler(event, context):
     recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
     subject = "stock reminder - TEST"
     body = "This is a test email sent from an automated lambda function,\n\n"
-    # body += df_products.head().to_string()
     for i in restock_list:
         body += f"product: {i[0]}, days to restock: {i[1]}\n"
 
