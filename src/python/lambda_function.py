@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import date
 
 import boto3
 import pandas as pd
@@ -86,10 +87,11 @@ def lambda_handler(event, context):
     # define email args
     sender = "automatedreminder@stockreminderdomain.com"
     recipients = ["info@yijiu.store", "axelwise676@gmail.com"]
-    subject = "stock reminder - TEST"
+    todays_date = date.today()
+    subject = f"Stock Reminder - {todays_date}"
     body = "This is a test email sent from an automated lambda function,\n\n"
     for i in restock_list:
-        body += f"product: {i[0]}, days to restock: {i[1]}\n"
+        body += f"product: {i[0]}\n You should restock in: {i[1]} days\n"
 
     # init client
     client = boto3.client('ses', region_name='eu-west-2')
@@ -97,7 +99,7 @@ def lambda_handler(event, context):
     # send email
     response = client.send_email(
         Destination={
-            'ToAddresses': [recipients[1]]
+            'ToAddresses': recipients
         },
         Message={
             'Body': {
