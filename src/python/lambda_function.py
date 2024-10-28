@@ -60,7 +60,7 @@ def lambda_handler(event, context):
     df_products = df_products.fillna(0)
 
     # calculate average orders per day and days of stock remaining for each product variant
-    days = 30
+    days = 60
     restock_time = 25
     orders_per_day = []
     days_of_stock_remaining = []
